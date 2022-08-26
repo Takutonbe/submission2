@@ -1,0 +1,33 @@
+<h1>Books</h1>
+<% @lists.each do |list| %>
+
+  <p>title</p>
+   <span>
+    <%= list.title %>
+  </span>
+  <p>body</p>
+  <span>
+   <%= list.body %>
+   </span>
+   <%= link_to "編集", edit_list_path(@list.id) %>
+   <%= link_to "削除", destroy_list_path(@list.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+  <% end %>
+
+  <h2>New book</h2>
+<% if @list.errors.any? %>
+  <%= @list.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @list.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @list, url: '/lists', method: :post do |f| %>
+  <h4>Title</h4>
+  <%= f.text_field :title %>
+<h4>body</h4>
+  <%= f.text_area :body %>
+
+  <%= f.submit 'Create Book' %>
+<% end %>
